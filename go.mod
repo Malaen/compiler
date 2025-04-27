@@ -1,6 +1,6 @@
 module github.com/Malaen/compiler
 
-go 1.23.4
+go 1.23
 
 require github.com/go-git/go-git v4.7.0+incompatible
 
