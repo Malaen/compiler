@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/gob"
 	"errors"
-	"fmt"
 	"os"
 	"os/exec"
 	"strconv"
@@ -30,7 +29,7 @@ func filter[T any](ss []T, test func(T) bool) (ret []T) {
 	return
 }
 
-func Map[T any](ss []T, toApply func(T) T) (ret []T) {
+func mapF[T any](ss []T, toApply func(T) T) (ret []T) {
 	for _, s := range ss {
 		ret = append(ret, toApply(s))
 	}
@@ -93,7 +92,7 @@ func extractRawSymbols(fileLines []string) (map[string]rawSymbol, map[string]raw
 		symContent := extractRawSymbol(fileLines[idx+1:])
 
 		// Trim all lines
-		symContent = Map(symContent, func(line string) string {
+		symContent = mapF(symContent, func(line string) string {
 			return strings.TrimSpace(line)
 		})
 
@@ -210,10 +209,5 @@ func CompileCode(config Config) (ret error) {
 
 	// Run the command and capture combined output
 	_, err := cmd.CombinedOutput()
-	if err != nil {
-		fmt.Println("Error:", err)
-	}
-
-	// Print the combined output (stdout + stderr)
 	return err
 }

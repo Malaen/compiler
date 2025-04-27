@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/go-git/go-git"
+	"github.com/go-git/go-git/v5"
 )
 
 type Config struct {
@@ -14,6 +14,7 @@ type Config struct {
 	BuildDir, OutputDir string
 	Instructions        map[string]int64 `yaml:"instructions"`
 	Registers           map[string]int64 `yaml:"registers"`
+	GolangPath          string           `yaml:"go_path"`
 }
 
 func downloadMalaen(buildDir string) (err error) {
@@ -22,7 +23,7 @@ func downloadMalaen(buildDir string) (err error) {
 		Progress: os.Stdout,
 	})
 
-	return er
+	return err
 }
 
 func generateCode(config Config) (err error) {
